@@ -1,62 +1,118 @@
-const body = document.body
+import articles from "../../src/js/global.js";
 
-var form = document.createElement('form');
+const body = document.body;
 
+// subcribe form
 
+var form = document.createElement("form");
 
-var submitButton = document.createElement('button');
-submitButton.setAttribute('type', 'submit');
-submitButton.textContent = 'Subscribe';
+var submitButton = document.createElement("button");
+submitButton.setAttribute("type", "submit");
+submitButton.textContent = "Subscribe";
 
-form.addEventListener('submit', function(event) {
-    event.preventDefault(); 
+form.addEventListener("submit", function (event) {
+  event.preventDefault();
 
-    
-
-    alert('Subscribed with email: ' );
 });
-
 
 form.prepend(submitButton);
 
 document.getElementById("form").prepend(form);
 
-document.getElementById("pharagrap") .innerHTML =`
+// ===========================================================
+
+// read url parameters
+const paramString = window.location.search ;
+const urlParam = new URLSearchParams (paramString);
+
+// console.log(urlParam.get("name"));
 
 
-<h1 id="title" style=" font-weight: bold; background: linear-gradient(60deg,#C41740,#EA9C28);  -webkit-background-clip :text;
-color: transparent; text-align: center; font-family:sans-serif; font-size: 50px; ">  Daily Digest </h1>
+
+document.getElementById("pharagrap").innerHTML = `
+
+
+<h1 id="title">  ${urlParam.get("name")} </h1>
 
 <p style="text-align: center; font-family: sans-serif; font-size:25px; line-height: 1.5 ; color: #476457; margin-top:-20px"> A description of the respective category goes right <br>here. Be as expressive as possible, but in brief. </p>
 
-`
+`;
 
 
 
+for (let i = 0; i < articles.length; i++) {
+  
+    if (articles[i].category === urlParam.get("name")) {
+      document.getElementById("articleContainer").innerHTML += `
+      <a href="../../pages/single/index.html?id=${articles[i].id}"><div class="card">
+      <div class="card-info">
+      <h4>${articles[i].publishDate} </h4>
+      <h2>${articles[i].title}</h2>
+      <p style=" text-align:left;">${articles[i].paragraphs[0]}</p>
+      </div>
+      <div class="img"><img src="${articles[i].primaryImageUrl}"> </div>
+    </div></a>
+                `;
+             
+    }
+  }
 
-document.getElementById("titles").innerHTML = `
-<p style="margin-bottom:40px;">AUGUST 13, 2021 </p>
-<h3>10 Hilarious Cartoons That Depict Real-Life <br>Problems of Programmers</h3>
-<p>Redefined the user acquisition and redesigned the onboarding <br>experience, all within 3 working weeks</p>`
 
 
-const imageUrls = [
-   "https://images.unsplash.com/photo-1637084576418-3f25344ccb7c?q=80&w=1964&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-   "https://images.unsplash.com/photo-1631624215749-b10b3dd7bca7?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-   "https://media.istockphoto.com/id/1414348176/photo/businessman-touching-screen-virtual-icon-eco-energy-sustainable-environment-digital.webp?s=2048x2048&w=is&k=20&c=xqP8jr92DRztn9Rcmb_50m0jMBGzwDn8lioko9fjdko=",
-   "https://media.istockphoto.com/id/1812239311/photo/a-businessman-is-displaying-a-3d-hologram-concept-of-the-ai-brain-on-his-hand-he-is-wearing-a.jpg?s=1024x1024&w=is&k=20&c=PrVa4T7leqvX1a1Phqf_gByZPcSo9SaLQs3lNpK0p44=",
-  ];
+  
+  document.getElementById("articleContainer").innerHTML +=`
+  <div class="click" style="margin-top:2%;"><h8> <a href="">More Article</a></h8></div>`;
 
 
+ 
+   let container = document.createElement("div");
+container.classList.add("container");
+document.body.appendChild(container);
 
+let box = document.createElement('div');
+box.classList.add("box");
+container.appendChild(box);
 
+let box1 = document.createElement('div');
+box1.innerHTML = "<h1>Personally Newsletter</h1>";
+box1.classList.add("box1");
+box.appendChild(box1);
 
-  const imgContainer = document.getElementById("img");
+let box2 = document.createElement('div');
+box2.innerHTML = "<p>A bi-weekly newsletter of design inspiration, resources <br>and anything related to career development.</p>";
+box2.classList.add("box2");
+box.appendChild(box2);
 
-for (let i = 0; i < imageUrls.length; i++) {
-  const img = document.createElement("img");
-  img.src = imageUrls[i];
-  img.style.cssText = "height:100%; width:100%; border-radius: 10px; margin-right: 20px; object-fit: cover;";
-  imgContainer.appendChild(img);
-}
+var form = document.createElement('form');
+
+var emailInput = document.createElement('input');
+emailInput.setAttribute('type', 'email');
+emailInput.setAttribute('placeholder', 'Email address');
+emailInput.setAttribute('name', 'email');
+
+var submitButton = document.createElement('button');
+submitButton.setAttribute('type', 'submit1');
+submitButton.textContent = 'Subscribe';
+
+form.addEventListener('submit1', function(event) {
+    event.preventDefault(); 
+
+    var email = emailInput.value;
+
+    alert('Subscribed with email: ' + email);
+});
+
+form.appendChild(emailInput);
+form.appendChild(submitButton);
+
+box.appendChild(form);
+
+let footer = document.createElement('div');
+footer.classList.add("footer");
+container.appendChild(footer);
+footer.innerHTML += `<p>Copyright 2024 - Elikem Daniels</p>
+
+ `;
+
+ 
 
